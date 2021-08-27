@@ -39,7 +39,13 @@ func main() {
 			continue
 		}
 		msg := tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
-		msg.ReplyMarkup = numericKeyboard
+
+		switch update.Message.Text {
+		case "/start":
+			msg.ReplyMarkup = numericKeyboard
+		case "close":
+			msg.ReplyMarkup = tgbotapi.NewRemoveKeyboard(true)
+		}
 
 		switch update.Message.Text {
 		case "DATA":
@@ -49,6 +55,18 @@ func main() {
 			file := "./eldorchik.jpg"
 			imsg := tgbotapi.NewPhotoUpload(update.Message.Chat.ID, file)
 			bot.Send(imsg)
+		case "TELNUMBER":
+			tel := tgbotapi.NewMessage(update.Message.Chat.ID, "+998973122902")
+			bot.Send(tel)
+		case "PASSPORT":
+			tel := tgbotapi.NewMessage(update.Message.Chat.ID, "Nima deganiz u internetga quymaganim bitta passport qoldi uzi")
+			bot.Send(tel)
+		case "DIPLOM":
+			tel := tgbotapi.NewMessage(update.Message.Chat.ID, "Nima deganiz u hali olmadimku")
+			bot.Send(tel)
+		case "HOMENUMBER":
+			tel := tgbotapi.NewMessage(update.Message.Chat.ID, "Nima deganiz u endi birkami sizga uyimni raqamini berganim qolgandi")
+			bot.Send(tel)
 		}
 
 	}
