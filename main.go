@@ -35,24 +35,27 @@ func main() {
 	updates, err := bot.GetUpdatesChan(u)
 
 	for update := range updates {
-		if update.Message == nil { // ignore non-Message updates
-			continue
-		}
+
 		msg := tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
 
 		switch update.Message.Text {
 		case "/start":
 			msg.ReplyMarkup = numericKeyboard
-		case "close":
+		case "/close":
 			msg.ReplyMarkup = tgbotapi.NewRemoveKeyboard(true)
 		}
+		if update.Message == nil { // ignore non-Message updates
+			continue
+		}
+
+		bot.Send(msg)
 
 		switch update.Message.Text {
 		case "DATA":
 			msgg := tgbotapi.NewMessage(update.Message.Chat.ID, "Hello my name is Eldor. I am 18 age. I study is Tashkent arxitektony inistitut")
 			bot.Send(msgg)
 		case "IMAGES":
-			file := "./eldorchik.jpg"
+			file := "./eldorchik1.jpg"
 			imsg := tgbotapi.NewPhotoUpload(update.Message.Chat.ID, file)
 			bot.Send(imsg)
 		case "TELNUMBER":
